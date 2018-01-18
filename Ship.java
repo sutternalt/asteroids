@@ -1,4 +1,4 @@
-package majoras.asteroids;
+package majoras.tasteroids;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -27,7 +27,7 @@ public class Ship extends Entity
 	public void collide(Board b)
     {
     	System.out.println("Ship collide");
-    	super.getBoard().entRegister.remove(super.entRKey);
+	   	super.getBoard().entRegister.remove(super.entRKey);
     	super.getBoard().restart();
     } 
 	

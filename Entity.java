@@ -1,4 +1,4 @@
-package majoras.asteroids;
+package majoras.tasteroids;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -32,7 +32,6 @@ public abstract class Entity //something on the screen that moves, collides, and
 		
 		entRKey = b.askKey(); //register on the board's entityRegister; this is used for collision detection
 		b.entRegister.put(entRKey,this);
-//		System.out.println(b.entRegister.getObjects()+"\n");
 		bd = b;
 	}
 	public Entity(Board b, String iconName)
@@ -263,7 +262,7 @@ public abstract class Entity //something on the screen that moves, collides, and
 				//}
 	        }
 	        Board.setValidSpaces(vS);
-		//}
+	//	}
 		//else
 		/*{
 			boolean onEdge = false;

@@ -1,4 +1,4 @@
-package majoras.asteroids;
+package majoras.tasteroids;
 
 //Game logic, keylistenening, etc. also "merged" with the main game window atm.
 

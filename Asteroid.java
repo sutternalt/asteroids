@@ -1,4 +1,4 @@
-package majoras.asteroids;
+package majoras.tasteroids;
 /**
  * @(#)Asteroid.java
  *

@@ -1,4 +1,4 @@
-package majoras.asteroids;
+package majoras.tasteroids;
 
 /**
  * @(#)Asteroids.java
@@ -11,10 +11,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.BoxLayout;
 
-public class Asteroids extends JFrame
+public class TimeAsteroids extends JFrame
 {
 
-    public Asteroids() 
+    public TimeAsteroids() 
     {
     	
     	add(new Board());
@@ -37,7 +37,7 @@ public class Asteroids extends JFrame
 					//MainMenu men = new MainMenu();
 					//add(men);
 					//men.setVisible(true);
-					Asteroids ast = new Asteroids();
+					TimeAsteroids ast = new TimeAsteroids();
 					ast.setVisible(true);
 				}
 		});

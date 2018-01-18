@@ -5,7 +5,7 @@
  * @author 
  * @version 1.00 2018/1/10
  */
-package majoras.asteroids;
+package majoras.tasteroids;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.util.*;
