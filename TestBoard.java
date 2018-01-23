@@ -93,6 +93,19 @@ public class TestBoard extends JPanel
 					if(areCoplanar(lin,lin2)) //if in the same plane in xyt-space: aka if scalar triple product of four 3points == 0
 					{
 						//transform lines to two lines from xyt space to two lines on coplanar plane space
+						//construct basis matrix: {N,lin1,lin1 X N}
+						double[] v1,v2,v3;
+						v1 = getCoplanarNormal(lin,lin2);
+						v2 = new double[] {x2-x1,y2-y1,100}; //this does not account for actual speed yet, and just assumes that you've gone x2-x1 in 100ms
+						double norm = Math.sqrt(Math.pow(v2[0],2)+Math.pow(v2[1],2)+Math.pow(v2[2],2));
+						v2 = new double[] {v2[0]/norm,v2[1]/norm,v2[2]/norm};
+						v3 = new double[] {v1[1]*v2[2]-v1[2]*v2[2],v1[2]*v2[0]-v1[0]*v2[2],v1[0]*v2[1]-v1[1]*v2[0]}; //v1 X v2
+						norm = Math.sqrt(Math.pow(v3[0],2)+Math.pow(v3[1],2)+Math.pow(v3[2],2));
+						v3 = new double[] {v3[0]/norm,v3[1]/norm,v3[2]/norm};
+																	
+						double[][] coplanarBasis = {v1,v2,v3};
+						
+						
 						//getCoPlane from (p2-p1) X (p3-p1) <- vector orthoganal to coplanar plane
 						
 						//start looking for collisions
@@ -135,6 +148,27 @@ public class TestBoard extends JPanel
 		return retVal;
 	}
 	
+	private double[] getCoplanarNormal(Line lin1, Line lin2)
+	{
+		double[] p1 = lin1.get3Point(); //xyt points
+		double[] p2 = lin1.get3Point(100);
+		double[] p3 = lin2.get3Point();
+		double[] p4 = lin2.get3Point(100);
+		
+		//scalar triple product == 0 between four 3points => coplanar
+		double[] p21 = {p2[0]-p1[0],p2[1]-p1[1],p2[2]-p1[2]};
+		double[] p31 = {p3[0]-p1[0],p3[1]-p1[1],p3[2]-p1[2]};
+		double[] p41 = {p4[0]-p1[0],p4[1]-p1[1],p4[2]-p1[2]};
+		
+		//{(x2-x1)X(x4-x1)} = (p21 X p41)
+		double[] cross = {(p21[1]*p41[2]-p21[2]*p41[1]), (p21[2]*p41[0]-p21[0]*p41[2]), (p21[0]*p41[1]-p21[1]*p41[0])};
+		double crossNorm = Math.sqrt(Math.pow(cross[0],2)+Math.pow(cross[1],2)+Math.pow(cross[2],2));
+		for(int i=0; i<3; i++)
+		{
+			cross[i] = cross[i]/crossNorm;
+		}
+		return cross;
+	}
 	private boolean areCoplanar(Line lin1, Line lin2)
 	{
 		double[] p1 = lin1.get3Point(); //xyt points
@@ -258,6 +292,7 @@ public class TestBoard extends JPanel
 		private int spd;
 		private int sz=3;
 		private int spawnTime; //in ms
+		private double tickspeed;
 		
 		public Line()
 		{
@@ -266,6 +301,7 @@ public class TestBoard extends JPanel
 			spd = (int)(Math.random()*4+1.0);
 			sz = (int)(Math.random()*2+1.0);
 			spawnTime = 0;
+			tickspeed = 1.0;
 		//	System.out.println(hdg+","+spd+"; ");
 		}
 		public Line(double x0, double y0, double hdg, int spd)
@@ -275,6 +311,11 @@ public class TestBoard extends JPanel
 			this.hdg = hdg;
 			this.spd = spd;
 			spawnTime = 0;
+			tickspeed =1.0;
+		}
+		public double getTickspeed()
+		{
+			return tickspeed;
 		}
 		public int getSize()
 		{
