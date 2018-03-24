@@ -2,11 +2,13 @@ package com.codingthroughthestuck;
 
 import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Asteroid extends Entity
 {
 	short size; //0 = small, 1 = medium, 2 = large
+	final String GAMEPATH = "/graphics/game/";
 
 	public Asteroid()
 	{
@@ -23,13 +25,13 @@ public class Asteroid extends Entity
 		initialize();
 		super.setSprite(getImg());
 	}
-	public Asteroid(short size, AstEvent spawn, Trajectory trajectory)
+	public Asteroid(short size, Trajectory trajectory)
 	{
 		super();
 		this.size = size;
 		initialize();
 		super.setSprite(getImg());
-		super.setSpawn(spawn);
+		super.setSpawn(new AstEvent('s',(int)trajectory.getT0(),new Point((int)trajectory.getX0(),(int)trajectory.getY0())));
 		super.setTrajectory(trajectory);
 	}
 	private void initialize()
@@ -43,19 +45,19 @@ public class Asteroid extends Entity
 		{
 			case 0:
 			{
-				return new Image("C:\\Users\\Andrew\\IdeaProjects\\TimeAsteroids\\src\\main\\resources\\graphics\\game\\ast_sm.png");
+				return new Image(GAMEPATH+"ast_sm.png");
 			}
 			case 1:
 			{
-				return new Image("C:\\Users\\Andrew\\IdeaProjects\\TimeAsteroids\\src\\main\\resources\\graphics\\game\\ast_md.png");
+				return new Image(GAMEPATH+"ast_md.png");
 			}
 			case 2:
 			{
-				return new Image("C:\\Users\\Andrew\\IdeaProjects\\TimeAsteroids\\src\\main\\resources\\graphics\\game\\ast_lg.png");
+				return new Image(GAMEPATH+"ast_lg.png");
 			}
 			default:
 			{
-				return new Image("C:\\Users\\Andrew\\IdeaProjects\\TimeAsteroids\\src\\main\\resources\\graphics\\game\\bullet.png");
+				return new Image(GAMEPATH+"bullet.png");
 			}
 		}
 	}

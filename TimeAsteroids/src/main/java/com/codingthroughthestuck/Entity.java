@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 
-public class Entity
+public class Entity //be certain to set spawn after creating a new object!!!
 {
 	private Trajectory trajectory;
 	private AstEvent spawn, collide;
@@ -14,12 +14,14 @@ public class Entity
 	//sound spawnNoise, collideNoise
 	private double tickSpeed, spin, orientation; //where orientation is in radians, right is 0. down is pi/2 and spin is in radians per second
 
+	final String GAMEPATH = "/graphics/game/";
+
 	public Entity()
 	{
 		trajectory = new Trajectory();
 		spawn = new AstEvent();
 		collide = new AstEvent();
-		sprite = new Image("C:\\Users\\Andrew\\IdeaProjects\\TimeAsteroids\\graphics\\game\\bullet.png"); //I need to somehow reference a relative url to stuff in the same jar... assuming that this ends up being a jar
+		sprite = new Image(GAMEPATH+"bullet.png"); //I need to somehow reference a relative url to stuff in the same jar... assuming that this ends up being a jar
 		tickSpeed = 1;
 		spin = 0;
 		orientation = 0;
@@ -29,11 +31,12 @@ public class Entity
 		this();
 		sprite = sp;
 	}
-	public Entity(Image sp, AstEvent spawn, Trajectory trajectory)
+	public Entity(Image sp, Trajectory trajectory)
 	{
 		this(sp);
-		this.spawn = spawn;
 		this.trajectory = trajectory;
+		this.spawn = new AstEvent('s',(int)trajectory.getT0(),new Point((int)trajectory.getX0(),(int)trajectory.getY0()));
+
 	}
 
 	public void setSpawn(AstEvent spawn)
