@@ -10,7 +10,7 @@ public class Entity //be certain to set spawn after creating a new object!!!
 {
 	private Trajectory trajectory;
 	private AstEvent spawn, collide;
-	Image sprite;
+	private Image sprite;
 	//sound spawnNoise, collideNoise
 	private double tickSpeed, spin, orientation; //where orientation is in radians, right is 0. down is pi/2 and spin is in radians per second
 
@@ -19,8 +19,8 @@ public class Entity //be certain to set spawn after creating a new object!!!
 	public Entity()
 	{
 		trajectory = new Trajectory();
-		spawn = new AstEvent();
-		collide = new AstEvent();
+		spawn = new AstEvent('s');
+		collide = new AstEvent('c');
 		sprite = new Image(GAMEPATH+"bullet.png"); //I need to somehow reference a relative url to stuff in the same jar... assuming that this ends up being a jar
 		tickSpeed = 1;
 		spin = 0;
@@ -36,7 +36,6 @@ public class Entity //be certain to set spawn after creating a new object!!!
 		this(sp);
 		this.trajectory = trajectory;
 		this.spawn = new AstEvent('s',(int)trajectory.getT0(),new Point((int)trajectory.getX0(),(int)trajectory.getY0()));
-
 	}
 
 	public void setSpawn(AstEvent spawn)
@@ -46,6 +45,10 @@ public class Entity //be certain to set spawn after creating a new object!!!
 	public void setCollide(AstEvent collide)
 	{
 		this.collide = collide;
+	}
+	public void setCollide(int time)
+	{
+		AstEvent collide = new AstEvent('c',time,trajectory.getLocAt(time));
 	}
 	public void setSprite(Image sprite)
 	{

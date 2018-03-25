@@ -1,8 +1,5 @@
 package com.codingthroughthestuck;
 
-//CURRENT TASK: FIGURE OUT WHY SHIP, ASTEROID IS NOT BEING ADDED TO ACTIVEENTITIES/WHY THEY AREN'T APPEARING ON SCREEN ANYMORE
-//LINE 215, FIRSTTIMESETUP AND HANDLE, IN GENERAL, AT LINE 72
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point3D;
@@ -22,18 +19,18 @@ import java.util.ListIterator;
 
 public class Board extends Application
 {
-	boolean firstTime = false;
-	boolean playerDidThings = false;
-	int currentTime = 0; //worldtime in ms; 0 is start of game, - is past, + is future
-	long startTime = 0; //in ns
-	long lastTime = 0; //last time the loop updated itself in ns;
-	int numLives = 1;
-	Entity playerShip;
-	LinkedList<AstEvent> timeline = new LinkedList<>(); //re-sort this any time you add something to it!!!!!!
-	AstEvent currentNextEvent = new AstEvent();  //the next event in the timeline, relative to tickspeed
-	HashMap<Point3D,Entity> entities = new HashMap<>(); //where the point is the spawnpoint; master list of all entities correlated to when they spawn
-	HashMap<Point3D,Entity> activeEntities = new HashMap<>(); //list of only those entities spawned but not yet collided during the current time
-	final String GAMEPATH = "/graphics/game/"; //really need to make a final static version of this somewhere - not here. Maybe in topmost level GUI? Also, have a variable for other graphics and sound resource directories
+	private boolean firstTime = true;
+	private boolean playerDidThings = false;
+	private int currentTime = 0; //worldtime in ms; 0 is start of game, - is past, + is future
+	private long startTime = 0; //in ns
+	private long lastTime = 0; //last time the loop updated itself in ns;
+	private int numLives = 1;
+	private Entity playerShip;
+	private LinkedList<AstEvent> timeline = new LinkedList<>(); //re-sort this any time you add something to it!!!!!!
+	private AstEvent currentNextEvent = new AstEvent();  //the next event in the timeline, relative to tickspeed
+	private HashMap<Point3D,Entity> entities = new HashMap<>(); //where the point is the spawnpoint; master list of all entities correlated to when they spawn
+	private HashMap<Point3D,Entity> activeEntities = new HashMap<>(); //list of only those entities spawned but not yet collided during the current time
+	private final String GAMEPATH = "/graphics/game/"; //really need to make a final static version of this somewhere - not here. Maybe in topmost level GUI? Also, have a variable for other graphics and sound resource directories
 
 	public static void main(String args[])
 	{
@@ -52,19 +49,21 @@ public class Board extends Application
 
 		stage.show();
 
+		//setup timeline
 		startTime = System.nanoTime();
-
 		timeline.addFirst(new AstEvent('s')); //adds a spawn at -MAXINT
 		timeline.addLast(new AstEvent('c')); //and a collision at MAXINT, so the timeline is properly set up
 
+		//setup initial entities
 		Image shipSprite = new Image(GAMEPATH+"ship.png");
 		playerShip = new Entity(shipSprite,new Trajectory(1,0,1,new Point3D(canvas.getWidth()/2-shipSprite.getWidth()/2,canvas.getHeight()/2-shipSprite.getHeight()/2,0))); //I was using this for testing, so maybe make it properly later
-		entities.put(playerShip.getSpawn().getXYT(),playerShip);
-		timeline.add(playerShip.getSpawn());
-		timeline.add(playerShip.getCollide());
-		Collections.sort(timeline);
+		register(playerShip);
+		//Add an asteroid for testing purposes
+		Asteroid ast = new Asteroid((short)2,new Trajectory(0,0.1,1,new Point3D(50,50,5)));
+		register(ast);
+
+		//find the next event
 		setCurrentNextEvent();
-		Asteroid ast = new Asteroid((short)2,new Trajectory(1,1,1,new Point3D(50,50,5)));
 
 		new AnimationTimer()
 		{
@@ -76,7 +75,15 @@ public class Board extends Application
 				gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 
 				//advance time
-				long deltaT = lastTime - currentNanoTime; //time since the last time this loop ran in ns
+				long deltaT;
+				if(lastTime !=0)
+				{
+					deltaT = lastTime - currentNanoTime; //time since the last time this loop ran in ns
+				}
+				else
+				{
+					deltaT = 0;
+				}
 				currentTime = (int)((playerShip.getTickSpeed()*currentNanoTime - startTime)/Math.pow(10,6)); //in ms; NOTE: THIS MEANS THAT PLAYERS CANNOT GO MORE THAN 24 DAYS INTO THE PAST/FUTURE.
 				setCurrentNextEvent();
 
@@ -163,7 +170,7 @@ public class Board extends Application
 			}
 		}.start();
 	}
-	private void setCurrentNextEvent()
+	private void setCurrentNextEvent() //finds the next event in the timeline relative to tickspeed and current time
 	{
 		if(playerShip.getTickSpeed() > 0) //positive timeflow
 		{
@@ -200,6 +207,7 @@ public class Board extends Application
 		}
 		return retVal;
 	}
+
 	private void updateTimeline() //collision detection
 	{
 		//for each entity in entities, check for collisions against all others, setCollision(earliest collision) !!!!!!!
@@ -209,11 +217,18 @@ public class Board extends Application
 		//for each entity in entities, if getspawn < current time < getCollide, putInto ActiveEntities
 		entities.forEach((k,v) ->
 		{
-			if(v.getSpawn().getTime() <= currentTime && currentTime <= v.getCollide().getTime())
+			//check to see if current time is between spawn and collide (for positive tickspeed entities) or between collide and spawn (for negative tickspeed entities)
+			if((v.getSpawn().getTime() <= currentTime && currentTime <= v.getCollide().getTime()) || (v.getCollide().getTime() <= currentTime && currentTime <= v.getSpawn().getTime()))
 			{
 				activeEntities.put(k,v);
-				System.out.print("first timed");
 			}
 		});
+	}
+	private void register(Entity e) //registers an entity onto timeline and entities
+	{
+		entities.put(e.getSpawn().getXYT(),e);
+		timeline.add(e.getSpawn());
+		timeline.add(e.getCollide());
+		Collections.sort(timeline);
 	}
 }

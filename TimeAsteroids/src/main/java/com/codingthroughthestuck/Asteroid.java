@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class Asteroid extends Entity
 {
-	short size; //0 = small, 1 = medium, 2 = large
-	final String GAMEPATH = "/graphics/game/";
+	private short size; //0 = small, 1 = medium, 2 = large
+	private final String GAMEPATH = "/graphics/game/";
 
 	public Asteroid()
 	{
