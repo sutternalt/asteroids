@@ -2,9 +2,10 @@ package com.codingthroughthestuck;
 
 //add get/set sound
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
-import java.awt.*;
+import java.awt.Point;
 
 public class Entity //be certain to set spawn after creating a new object!!!
 {
@@ -35,6 +36,7 @@ public class Entity //be certain to set spawn after creating a new object!!!
 	{
 		this(sp);
 		this.trajectory = trajectory;
+		this.tickSpeed = trajectory.getTickSpeed();
 		this.spawn = new AstEvent('s',(int)trajectory.getT0(),new Point((int)trajectory.getX0(),(int)trajectory.getY0()));
 	}
 
@@ -46,9 +48,9 @@ public class Entity //be certain to set spawn after creating a new object!!!
 	{
 		this.collide = collide;
 	}
-	public void setCollide(int time)
+	public void setCollide(int time,Canvas canvas)
 	{
-		AstEvent collide = new AstEvent('c',time,trajectory.getLocAt(time));
+		AstEvent collide = new AstEvent('c',time,trajectory.getLocAt(time, canvas));
 	}
 	public void setSprite(Image sprite)
 	{

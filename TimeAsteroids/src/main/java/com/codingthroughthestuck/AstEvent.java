@@ -16,17 +16,19 @@ public class AstEvent implements Comparable<AstEvent>
 		location = new Point(0,0);
 		type = 's';
 	}
-	public AstEvent(char y)
+	public AstEvent(char y) //type of event: s = spawn, c = collide, p = player action; S = active playerShip spawn, C = active PlayerShip collide <= these are necessary b/c relative tickspeed of player ship is just the tickspeed of the player ship
 	{
 		type = y;
 		switch(y)
 		{
+			case 'S':
 			case 's':
 			{
 				time = Integer.MIN_VALUE;
 				location = new Point(0,0);
 				break;
 			}
+			case 'C':
 			case 'c':
 			{
 				time = Integer.MAX_VALUE;
@@ -66,6 +68,10 @@ public class AstEvent implements Comparable<AstEvent>
 	public Point3D getXYT()
 	{
 		return new Point3D(location.getX(),location.getY(),time);
+	}
+	public void setType(char c)
+	{
+		type = c;
 	}
 
 	@Override

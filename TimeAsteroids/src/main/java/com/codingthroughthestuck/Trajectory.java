@@ -1,8 +1,9 @@
 package com.codingthroughthestuck;
 
 import javafx.geometry.Point3D;
+import javafx.scene.canvas.Canvas;
 
-import java.awt.*;
+import java.awt.Point;
 
 public class Trajectory
 {
@@ -38,12 +39,25 @@ public class Trajectory
 	{
 		return Math.sqrt(Math.pow(mX,2)+Math.pow(mY,2));
 	}
-	public Point getLocAt(int time) //returns the xy location at a given time in ms or -1,-1 if it doesn't exist
+	public Point getLocAt(int time, Canvas canvas) //returns the xy location at a given time in ms or -1,-1 if it doesn't exist - accounts for wraparound
 	{
 		if(time > spawn.getZ())
 		{
-			int x = (int)Math.floor(mX*time*tickSpeed) + (int)spawn.getX();
-			int y = (int)Math.floor(mY*time*tickSpeed) + (int)spawn.getY();
+			int x = ((int)Math.floor(mX*(time-spawn.getZ())*tickSpeed) + (int)spawn.getX())%(int)canvas.getWidth();
+			int y = ((int)Math.floor(mY*(time-spawn.getZ())*tickSpeed) + (int)spawn.getY())%(int)canvas.getHeight();
+			return new Point(x,y);
+		}
+		else
+		{
+			return new Point(-1,-1);
+		}
+	}
+	public Point getRawLocAt(int time) //returns the xy location at a given time in ms or -1,-1 if it doesn't exist - does not account for wraparound
+	{
+		if(time > spawn.getZ())
+		{
+			int x = (int)Math.floor(mX*(time-spawn.getZ())*tickSpeed) + (int)spawn.getX();
+			int y = (int)Math.floor(mY*(time-spawn.getZ())*tickSpeed) + (int)spawn.getY();
 			return new Point(x,y);
 		}
 		else
