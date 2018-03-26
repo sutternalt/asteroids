@@ -1,5 +1,9 @@
 package com.codingthroughthestuck;
 
+//CURRENT ISSUES: THE ASTEROID WON'T SPAWN, TRAVELLING TO BEFORE SOMETHING SPAWNS PUTS THE OBJECT IN THE UPPER LEFT HAND CORNER, WHICH IS... INTERESTING.
+//ISSUE 2: POSSIBLY NEED TO DETECT RUNNING OVER A SPAWN FROM REVERSE-TO-ENTITY'S TICKSPEED AND THEN REMOVE FROM ACTIVEENTITIES IF SO
+//ISSUE 1: IS THE ASTEROID EVER GETTING REGISTERED TO ACTIVE ENTITIES? IS IT A TIME-APPROXIMATION THING?
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point3D;
@@ -12,10 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.awt.Point;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.*;
 
 public class Board extends Application
 {
@@ -23,7 +24,7 @@ public class Board extends Application
 	private boolean playerDidThings = false;
 	private int currentTime = 0; //worldtime in ms; 0 is start of game, - is past, + is future
 	private long startTime = 0; //in ns
-	private long lastTime = 0; //last time the loop updated itself in ns;
+	private long lastClockTime = 0; //last time the loop updated itself in ns;
 	private int numLives = 1;
 	private Entity playerShip;
 	private LinkedList<AstEvent> timeline = new LinkedList<>(); //re-sort this any time you add something to it!!!!!!
@@ -49,6 +50,26 @@ public class Board extends Application
 
 		stage.show();
 
+		//setup key listening array
+		ArrayList<String> keys = new ArrayList<String>();
+
+		scene.setOnKeyPressed(e ->
+				{
+					String code = e.getCode().toString();
+
+					// only add once... prevent duplicates
+					if (!keys.contains(code))
+						keys.add(code);
+
+				});
+
+		scene.setOnKeyReleased(
+				e ->
+				{
+					String code = e.getCode().toString();
+					keys.remove(code);
+				});
+
 		//setup timeline
 		startTime = System.nanoTime();
 		timeline.addFirst(new AstEvent('s')); //adds a spawn at -MAXINT
@@ -59,7 +80,7 @@ public class Board extends Application
 		playerShip = new Entity(shipSprite,new Trajectory(1,0,1,new Point3D(canvas.getWidth()/2-shipSprite.getWidth()/2,canvas.getHeight()/2-shipSprite.getHeight()/2,0))); //I was using this for testing, so maybe make it properly later
 		register(playerShip);
 		//Add an asteroid for testing purposes
-		Asteroid ast = new Asteroid((short)2,new Trajectory(0,0.1,1,new Point3D(50,50,5)));
+		Asteroid ast = new Asteroid((short)2,new Trajectory(0,0.1,1,new Point3D(50,50,5000)));
 		register(ast);
 
 		//find the next event
@@ -75,16 +96,17 @@ public class Board extends Application
 				gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 
 				//advance time
-				long deltaT;
-				if(lastTime !=0)
+				long deltaT; //time, in ns, since the last frame
+				if(lastClockTime !=0)
 				{
-					deltaT = lastTime - currentNanoTime; //time since the last time this loop ran in ns
+					deltaT = Math.abs(lastClockTime - currentNanoTime); //time since the last time this loop ran in ns
 				}
 				else
 				{
 					deltaT = 0;
 				}
-				currentTime = (int)((playerShip.getTickSpeed()*currentNanoTime - startTime)/Math.pow(10,6)); //in ms; NOTE: THIS MEANS THAT PLAYERS CANNOT GO MORE THAN 24 DAYS INTO THE PAST/FUTURE.
+				//ctime = old time + change in time = old time + ms since last time * tickspeed
+				currentTime = currentTime + (int)((playerShip.getTickSpeed()*deltaT)/Math.pow(10,6)); //in ms; NOTE: THIS MEANS THAT PLAYERS CANNOT GO MORE THAN 24 DAYS INTO THE PAST/FUTURE.
 				setCurrentNextEvent();
 
 				//be annoyed the player did things, forcing us to recalculate everything
@@ -165,8 +187,30 @@ public class Board extends Application
 					gc.drawImage(v.getSprite(),loc.getX(),loc.getY());
 				});
 
-				//update lastTime
-				lastTime = currentNanoTime;
+				//Helpful for knowing which key does what
+//				keys.forEach(s ->
+//				{
+//					System.out.println(s);
+//				});
+
+				//handle key presses
+				if(keys.contains("Q")) //decrease tickspeed
+				{
+					//playerShip.setTickSpeed(playerShip.getTickSpeed()-0.1);
+					playerShip.setTickSpeed(-1);
+				}
+				if(keys.contains("E")) //increase tickspeed
+				{
+					playerShip.setTickSpeed(playerShip.getTickSpeed()+0.1);
+					playerShip.setTickSpeed(1);
+				}
+				if(keys.contains("W"))
+				{
+					playerShip.setTickSpeed(0);
+				}
+
+				//update lastClockTime
+				lastClockTime = currentNanoTime;
 			}
 		}.start();
 	}
@@ -208,7 +252,7 @@ public class Board extends Application
 		return retVal;
 	}
 
-	private void updateTimeline() //collision detection
+	private void updateTimeline() //collision detection/generation
 	{
 		//for each entity in entities, check for collisions against all others, setCollision(earliest collision) !!!!!!!
 	}
