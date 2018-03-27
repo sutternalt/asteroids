@@ -1,7 +1,7 @@
 package com.codingthroughthestuck;
 
-//CURRENT ISSUES: Not yet known.
-//Current goal: Window resizing;
+//CURRENT ISSUES: window resizing changes the positions of everything because we're using mod to display things... I'm not sure if I care. No. I care, but I'm not going to let the user dynamically resize the window.
+//Current goal: Collision Detection
 /*
 Options:
 -Collision detection
@@ -12,6 +12,7 @@ Options:
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -36,6 +37,7 @@ public class Board extends Application
 	private long lastClockTime = 0; //last time the loop updated itself in ns;
 	private long deltaT; //time, in ns, since the last frame
 	private int numLives = 1;
+	private Canvas canvas;
 	private Entity playerShip;
 	private LinkedList<AstEvent> timeline = new LinkedList<>(); //re-sort this any time you add something to it!!!!!!
 	private LinkedList<AstEvent> currentNextEvents = new LinkedList<>();  //the next events in the timeline, relative to tickspeed; contains a list of all events happening at the same millisecond
@@ -54,12 +56,22 @@ public class Board extends Application
 		Group root = new Group();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
-		Canvas canvas = new Canvas(800,800);
+		canvas = new Canvas(800,600);
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 
 		stage.show();
+
+		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
+		{
+			canvas.setHeight(stage.getHeight());
+			canvas.setWidth(stage.getWidth());
+		};
+
+
+		stage.widthProperty().addListener(stageSizeListener);
+		stage.heightProperty().addListener(stageSizeListener);
 
 		//setup key listening array
 		ArrayList<String> keys = new ArrayList<String>();
@@ -453,6 +465,20 @@ public class Board extends Application
 		//for each entity in entities, check for collisions against all others, setCollision(earliest collision) !!!!!!!
 		//then delete the collision from entities and put the new one in
 		//also, do the same process for entities travelling backward in time and backward in time relative to the player tickspeed
+
+
+	}
+	private void resetCollision(Entity e, int newCollisionTime)
+	{
+		double x = e.getTrajectory().getLocAt(newCollisionTime,canvas).getX();
+		double y = e.getTrajectory().getLocAt(newCollisionTime,canvas).getY();
+		Point3D newCollide = new Point3D(x,y,newCollisionTime)
+		entities.remove(e.getCollide().getXYT());
+		entities.put(newCollide,e);
+		timeline.add(entities.get(newCollide).getCollide());
+		timeline.remove //remove the old collision
+		Collections.sort(timeline);
+		Collections.reverse(timeline);
 	}
 	private void firstTimeSetup()
 	{
