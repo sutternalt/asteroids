@@ -1,13 +1,12 @@
 package com.codingthroughthestuck;
 
 //CURRENT ISSUES: Not yet known.
-//Current goal: Timeline HUD, Window resizing; decide whether window, frame, or canvas is appropriate and then be consistent
+//Current goal: Window resizing;
 /*
 Options:
 -Collision detection
--Player movement
+-Player movement & Controls
 -Properly-sized artwork
--Timeline HUD
 
  */
 
@@ -43,6 +42,7 @@ public class Board extends Application
 	private HashMap<Point3D,Entity> entities = new HashMap<>(); //where the point is the spawnpoint; master list of all entities correlated to when they spawn
 	private HashMap<Point3D,Entity> activeEntities = new HashMap<>(); //list of only those entities spawned but not yet collided during the current time
 	private final String GAMEPATH = "/graphics/game/"; //really need to make a final static version of this somewhere - not here. Maybe in topmost level GUI? Also, have a variable for other graphics and sound resource directories
+	private final String HUDPATH = "/graphics/hud/";
 
 	public static void main(String args[])
 	{
@@ -266,52 +266,10 @@ public class Board extends Application
 				});
 
 				//draw the HUD
-				String tickText = playerShip.getTickSpeed()+"";
-				int sec = (int)Math.floor(currentTime)/1000;
-				int min = (int)Math.floor(sec/60);
-				int hour = (int)Math.floor(min/60);
+				dispTempometer(gc);
+				dispClock(gc);
+				dispTimeline(gc);
 
-				String seconds = sec%60+"";
-				if(seconds.length()==1)
-					seconds = "0"+seconds;
-				else if(sec<0 && seconds.length()==2)
-					seconds = "0"+seconds.substring(1);
-				String hours = hour+"";
-				String minutes = min%60+"";
-
-				if(min<0)
-				{
-					minutes = minutes.substring(1);
-				}
-				if(hour<0)
-				{
-					hours = hours.substring(1);
-				}
-				if(sec<0)
-				{
-					hours = "-" + hour;
-				}
-
-				gc.setStroke(Color.BLACK);
-				gc.setLineWidth(1);
-				Font theFont = Font.font("Bookman Old Style", FontWeight.BOLD, 20);
-				gc.setFont(theFont);
-				if(playerShip.getTickSpeed()>0)
-					gc.setFill(Color.LIMEGREEN);
-				else if(playerShip.getTickSpeed() == 0)
-					gc.setFill(Color.ORANGE);
-				else
-					gc.setFill(Color.RED);
-				gc.fillText("Tickspeed: "+tickText+" s/s", scene.getWidth()/2-75, 50);
-				gc.strokeText("Tickspeed: "+tickText+" s/s", scene.getWidth()/2-75, 50);
-				if(sec >0)
-					gc.setFill(Color.LIMEGREEN);
-				else if(sec == 0)
-					gc.setFill(Color.ORANGE);
-				else
-					gc.setFill(Color.RED);
-				gc.fillText("Time: "+hours+":"+minutes+":"+seconds, scene.getWidth()/2-75, 25);
-				gc.strokeText("Time: "+hours+":"+minutes+":"+seconds, scene.getWidth()/2-75, 25);
 
 				//Debugging Lines
 // 				gc.setFill(Color.BLACK);
@@ -341,6 +299,91 @@ public class Board extends Application
 				}
 			}
 		}.start();
+	}
+	private void dispClock(GraphicsContext gc)
+	{
+		int sec = (int)Math.floor(currentTime)/1000;
+		int min = (int)Math.floor(sec/60);
+		int hour = (int)Math.floor(min/60);
+		String seconds = sec%60+"";
+		if(seconds.length()==1)
+			seconds = "0"+seconds;
+		else if(sec<0 && seconds.length()==2)
+			seconds = "0"+seconds.substring(1);
+		String hours = hour+"";
+		String minutes = min%60+"";
+
+		if(min<0)
+		{
+			minutes = minutes.substring(1);
+		}
+		if(hour<0)
+		{
+			hours = hours.substring(1);
+		}
+		if(sec<0)
+		{
+			hours = "-" + hour;
+		}
+
+		if(sec >0)
+			gc.setFill(Color.LIMEGREEN);
+		else if(sec == 0)
+			gc.setFill(Color.ORANGE);
+		else
+			gc.setFill(Color.RED);
+		gc.fillText("Time: "+hours+":"+minutes+":"+seconds, gc.getCanvas().getWidth()/2-75, 25);
+		gc.strokeText("Time: "+hours+":"+minutes+":"+seconds, gc.getCanvas().getWidth()/2-75, 25);
+
+	}
+	private void dispTempometer(GraphicsContext gc)
+	{
+		String tickText = playerShip.getTickSpeed()+"";
+
+		gc.setStroke(Color.BLACK);
+		gc.setLineWidth(1);
+		Font theFont = Font.font("Bookman Old Style", FontWeight.BOLD, 20);
+		gc.setFont(theFont);
+		if(playerShip.getTickSpeed()>0)
+			gc.setFill(Color.LIMEGREEN);
+		else if(playerShip.getTickSpeed() == 0)
+			gc.setFill(Color.ORANGE);
+		else
+			gc.setFill(Color.RED);
+		gc.fillText("Tickspeed: "+tickText+" s/s", gc.getCanvas().getWidth()/2-75, 50);
+		gc.strokeText("Tickspeed: "+tickText+" s/s", gc.getCanvas().getWidth()/2-75, 50);
+	}
+	private void dispTimeline(GraphicsContext gc)
+	{
+		Image tL = new Image(HUDPATH+"Timeline.png");
+		Image img;
+		gc.drawImage(tL,gc.getCanvas().getWidth()/2-(tL.getWidth()/2),gc.getCanvas().getHeight()-tL.getHeight());
+		double xTime = currentTime/1000*(int)tL.getWidth()/(60*4); //relative location of present
+		double xOffset = gc.getCanvas().getWidth()/2 - xTime; //center of timeline image, x
+		double yOffset = gc.getCanvas().getHeight()-(tL.getHeight()/2);//center of timeline image, y
+
+		for(AstEvent e : timeline)
+		{
+			int xRel = e.getTime()/1000*(int)tL.getWidth()/(60*4); //pixels from center of timeline: time*s/ms*px/s
+			switch(e.getType())
+			{
+				case 'S':
+				case 's':
+					img = new Image(HUDPATH+"Spawn.png");
+					gc.drawImage(img,xRel+xOffset-img.getWidth()/2,yOffset-img.getHeight()/2);
+					break;
+				case 'C':
+					img = new Image(HUDPATH+"Death.png");
+					gc.drawImage(img,xRel+xOffset-img.getWidth()/2,yOffset-img.getHeight()/2);
+					break;
+				case 'c':
+					img = new Image(HUDPATH+"Collide.png");
+					gc.drawImage(img,xRel+xOffset-img.getWidth()/2,yOffset-img.getHeight()/2);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 	private void setCurrentNextEvents() //finds the next event in the timeline relative to tickspeed and current time
 	{
