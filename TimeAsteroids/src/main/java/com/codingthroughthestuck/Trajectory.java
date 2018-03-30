@@ -49,6 +49,7 @@ public class Trajectory
 		}
 		else
 		{
+			System.out.println("entity does not exist @Trajectory@getLocAt");
 			return new Point(-1,-1);
 		}
 	}

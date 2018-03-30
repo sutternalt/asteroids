@@ -9,15 +9,18 @@ public class AstEvent implements Comparable<AstEvent>
 	private int time; //time in ms
 	private Point location; //xy location of event in pixels from upper left corner
 	private char type; //type of event: s = spawn, c = collision, p = player action
+	private Point3D entityKey; //associated entity's spawn time/loc; defaults to junk entity
 
 	public AstEvent() //only included for completeness: a spawn at 0,0,0
 	{
 		time = 0;
 		location = new Point(0,0);
 		type = 's';
+		entityKey = new Point3D(0,0,Integer.MIN_VALUE);
 	}
-	public AstEvent(char y) //type of event: s = spawn, c = collide, p = player action; S = active playerShip spawn, C = active PlayerShip collide <= these are necessary b/c relative tickspeed of player ship is just the tickspeed of the player ship
+	public AstEvent(char y, Point3D entityKey) //type of event: s = spawn, c = collide, p = player action; S = active playerShip spawn, C = active PlayerShip collide <= these are necessary b/c relative tickspeed of player ship is just the tickspeed of the player ship
 	{
+		this.entityKey = entityKey;
 		type = y;
 		switch(y)
 		{
@@ -44,8 +47,9 @@ public class AstEvent implements Comparable<AstEvent>
 			}
 		}
 	}
-	public AstEvent(char y, int t, Point l)
+	public AstEvent(char y, int t, Point l, Point3D entityKey)
 	{
+		this.entityKey = entityKey;
 		time = t;
 		location = l;
 		type = y;
@@ -59,6 +63,10 @@ public class AstEvent implements Comparable<AstEvent>
 	public int getTime()
 	{
 		return time;
+	}
+	public Point3D getEntityKey()
+	{
+		return entityKey;
 	}
 
 	public Point getLoc()

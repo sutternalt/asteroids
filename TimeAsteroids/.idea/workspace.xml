@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Asteroid.java" line="20" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Asteroid.java" line="21" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Board.java" line="502" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="107c0658-9736-4974-bfe8-2209ada06068" name="Default" comment="" />
@@ -34,10 +35,14 @@
       <file leaf-file-name="AstEvent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/AstEvent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1020">
-              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state relative-caret-position="340">
+              <caret line="20" column="49" lean-forward="false" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1524#1525#0" expanded="true" />
+                <element signature="e#1547#1548#0" expanded="true" />
+                <element signature="e#1624#1625#0" expanded="true" />
+                <element signature="e#1687#1688#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -46,8 +51,8 @@
       <file leaf-file-name="Trajectory.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Trajectory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="61" column="9" lean-forward="false" selection-start-line="61" selection-start-column="9" selection-end-line="61" selection-end-column="9" />
+            <state relative-caret-position="56">
+              <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -58,8 +63,8 @@
       <file leaf-file-name="Asteroid.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Asteroid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="16" column="35" lean-forward="false" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+            <state relative-caret-position="186">
+              <caret line="34" column="30" lean-forward="false" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,10 +75,15 @@
       <file leaf-file-name="Entity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Entity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="186">
+              <caret line="55" column="30" lean-forward="false" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#Entity#0;class#Entity#0" expanded="false" />
+                <element signature="method#Entity#1;class#Entity#0" expanded="false" />
+                <element signature="method#Entity#2;class#Entity#0" expanded="false" />
+                <element signature="e#2388#2389#0" expanded="true" />
+                <element signature="e#2407#2408#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,7 +92,7 @@
       <file leaf-file-name="Testing.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Testing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1955">
+            <state relative-caret-position="524">
               <caret line="115" column="7" lean-forward="false" selection-start-line="115" selection-start-column="7" selection-end-line="115" selection-end-column="7" />
               <folding />
             </state>
@@ -92,16 +102,33 @@
       <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="478" column="50" lean-forward="false" selection-start-line="478" selection-start-column="50" selection-end-line="478" selection-end-column="50" />
+            <state relative-caret-position="85">
+              <caret line="5" column="122" lean-forward="false" selection-start-line="5" selection-start-column="122" selection-end-line="5" selection-end-column="122" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2304#2305#0" expanded="true" />
-                <element signature="e#2323#2324#0" expanded="true" />
-                <element signature="e#2975#2983#0" expanded="true" />
-                <element signature="e#4255#11105#0" expanded="true" />
-                <element signature="e#11104#11105#0" expanded="true" />
+                <element signature="e#2593#2594#0" expanded="true" />
+                <element signature="e#2612#2613#0" expanded="true" />
+                <element signature="e#3264#3272#0" expanded="true" />
+                <element signature="e#4569#11481#0" expanded="true" />
+                <element signature="e#11480#11481#0" expanded="true" />
+                <element signature="method#dispClock#0;class#Board#0" expanded="false" />
+                <element signature="method#dispTempometer#0;class#Board#0" expanded="false" />
+                <element signature="method#setCurrentNextEvents#0;class#Board#0" expanded="false" />
+                <element signature="method#nextEarliestEvent#0;class#Board#0" expanded="false" />
+                <element signature="method#lastLatestEvent#0;class#Board#0" expanded="false" />
+                <element signature="method#updateTimeline#0;class#Board#0" expanded="false" />
+                <element signature="method#resetCollision#0;class#Board#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Point3D.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/javafx.graphics/javafx/geometry/Point3D.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="418" column="0" lean-forward="false" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -117,10 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>entities</find>
-      <find>firstTime</find>
-      <find>first</find>
-      <find>asteroid</find>
       <find>ast</find>
       <find>setcurrentne</find>
       <find>currenttime</find>
@@ -140,6 +163,17 @@
       <find>gettim</find>
       <find>.geth</find>
       <find>getcoll</find>
+      <find>updatetimel</find>
+      <find>entities alw</find>
+      <find>getloc</find>
+      <find>resetcolli</find>
+      <find>register</find>
+      <find>&quot;Q</find>
+      <find>GETLOC</find>
+      <find>timeline.add</find>
+      <find>new AstEvent</find>
+      <find>new ast</find>
+      <find>getXYT</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -157,10 +191,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Testing.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Asteroid.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/AstEvent.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Trajectory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/AstEvent.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Entity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Asteroid.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Board.java" />
       </list>
     </option>
@@ -173,10 +207,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="x" value="953" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -193,9 +226,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -257,6 +287,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -427,7 +460,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -438,18 +471,18 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32661718" sideWeight="0.49092284" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3267974" sideWeight="0.49092284" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1633888" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39766702" sideWeight="0.4969743" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -467,43 +500,44 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Board.java</url>
-          <line>404</line>
+          <line>221</line>
           <properties />
-          <option name="timeStamp" value="44" />
+          <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Board.java</url>
-          <line>459</line>
+          <line>168</line>
           <properties />
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Board.java</url>
-          <line>509</line>
-          <properties />
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Entity.java</url>
-          <line>57</line>
-          <properties />
-          <option name="timeStamp" value="57" />
+          <option name="timeStamp" value="84" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="60" />
+      <option name="time" value="86" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="activeEntities" language="JAVA" />
         <watch expression="timeline" language="JAVA" />
+        <watch expression="updatedCollisions" language="JAVA" />
+        <watch expression="entities" language="JAVA" />
+        <watch expression="entities" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>entities</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>updatedCollisions</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>timeline</expression-string>
         <language-id>JAVA</language-id>
@@ -525,6 +559,11 @@
           <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Entity#0;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#1;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#2;class#Entity#0" expanded="false" />
+            <element signature="e#2388#2389#0" expanded="true" />
+            <element signature="e#2407#2408#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -543,6 +582,10 @@
           <caret line="66" column="5" lean-forward="false" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1524#1525#0" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1624#1625#0" expanded="true" />
+            <element signature="e#1687#1688#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -563,6 +606,11 @@
           <caret line="37" column="121" lean-forward="false" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="121" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Entity#0;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#1;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#2;class#Entity#0" expanded="false" />
+            <element signature="e#2388#2389#0" expanded="true" />
+            <element signature="e#2407#2408#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -591,11 +639,18 @@
           <caret line="84" column="17" lean-forward="true" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2304#2305#0" expanded="true" />
-            <element signature="e#2323#2324#0" expanded="true" />
-            <element signature="e#2975#2983#0" expanded="true" />
-            <element signature="e#4255#11105#0" expanded="true" />
-            <element signature="e#11104#11105#0" expanded="true" />
+            <element signature="e#2593#2594#0" expanded="true" />
+            <element signature="e#2612#2613#0" expanded="true" />
+            <element signature="e#3264#3272#0" expanded="true" />
+            <element signature="e#4569#11481#0" expanded="true" />
+            <element signature="e#11480#11481#0" expanded="true" />
+            <element signature="method#dispClock#0;class#Board#0" expanded="false" />
+            <element signature="method#dispTempometer#0;class#Board#0" expanded="false" />
+            <element signature="method#setCurrentNextEvents#0;class#Board#0" expanded="false" />
+            <element signature="method#nextEarliestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#lastLatestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#updateTimeline#0;class#Board#0" expanded="false" />
+            <element signature="method#resetCollision#0;class#Board#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -614,6 +669,10 @@
           <caret line="66" column="5" lean-forward="true" selection-start-line="66" selection-start-column="5" selection-end-line="66" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1524#1525#0" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1624#1625#0" expanded="true" />
+            <element signature="e#1687#1688#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -634,6 +693,11 @@
           <caret line="37" column="121" lean-forward="false" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="121" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Entity#0;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#1;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#2;class#Entity#0" expanded="false" />
+            <element signature="e#2388#2389#0" expanded="true" />
+            <element signature="e#2407#2408#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -662,11 +726,18 @@
           <caret line="3" column="61" lean-forward="false" selection-start-line="3" selection-start-column="61" selection-end-line="3" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2304#2305#0" expanded="true" />
-            <element signature="e#2323#2324#0" expanded="true" />
-            <element signature="e#2975#2983#0" expanded="true" />
-            <element signature="e#4255#11105#0" expanded="true" />
-            <element signature="e#11104#11105#0" expanded="true" />
+            <element signature="e#2593#2594#0" expanded="true" />
+            <element signature="e#2612#2613#0" expanded="true" />
+            <element signature="e#3264#3272#0" expanded="true" />
+            <element signature="e#4569#11481#0" expanded="true" />
+            <element signature="e#11480#11481#0" expanded="true" />
+            <element signature="method#dispClock#0;class#Board#0" expanded="false" />
+            <element signature="method#dispTempometer#0;class#Board#0" expanded="false" />
+            <element signature="method#setCurrentNextEvents#0;class#Board#0" expanded="false" />
+            <element signature="method#nextEarliestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#lastLatestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#updateTimeline#0;class#Board#0" expanded="false" />
+            <element signature="method#resetCollision#0;class#Board#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -685,6 +756,10 @@
           <caret line="42" column="13" lean-forward="false" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1524#1525#0" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1624#1625#0" expanded="true" />
+            <element signature="e#1687#1688#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -723,11 +798,18 @@
           <caret line="35" column="34" lean-forward="false" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2304#2305#0" expanded="true" />
-            <element signature="e#2323#2324#0" expanded="true" />
-            <element signature="e#2975#2983#0" expanded="true" />
-            <element signature="e#4255#11105#0" expanded="true" />
-            <element signature="e#11104#11105#0" expanded="true" />
+            <element signature="e#2593#2594#0" expanded="true" />
+            <element signature="e#2612#2613#0" expanded="true" />
+            <element signature="e#3264#3272#0" expanded="true" />
+            <element signature="e#4569#11481#0" expanded="true" />
+            <element signature="e#11480#11481#0" expanded="true" />
+            <element signature="method#dispClock#0;class#Board#0" expanded="false" />
+            <element signature="method#dispTempometer#0;class#Board#0" expanded="false" />
+            <element signature="method#setCurrentNextEvents#0;class#Board#0" expanded="false" />
+            <element signature="method#nextEarliestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#lastLatestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#updateTimeline#0;class#Board#0" expanded="false" />
+            <element signature="method#resetCollision#0;class#Board#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -738,6 +820,11 @@
           <caret line="18" column="19" lean-forward="true" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Entity#0;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#1;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#2;class#Entity#0" expanded="false" />
+            <element signature="e#2388#2389#0" expanded="true" />
+            <element signature="e#2407#2408#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -756,6 +843,10 @@
           <caret line="42" column="13" lean-forward="false" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1524#1525#0" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1624#1625#0" expanded="true" />
+            <element signature="e#1687#1688#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -766,6 +857,11 @@
           <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#Entity#0;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#1;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#2;class#Entity#0" expanded="false" />
+            <element signature="e#2388#2389#0" expanded="true" />
+            <element signature="e#2407#2408#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -807,11 +903,18 @@
           <caret line="55" column="32" lean-forward="false" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2304#2305#0" expanded="true" />
-            <element signature="e#2323#2324#0" expanded="true" />
-            <element signature="e#2975#2983#0" expanded="true" />
-            <element signature="e#4255#11105#0" expanded="true" />
-            <element signature="e#11104#11105#0" expanded="true" />
+            <element signature="e#2593#2594#0" expanded="true" />
+            <element signature="e#2612#2613#0" expanded="true" />
+            <element signature="e#3264#3272#0" expanded="true" />
+            <element signature="e#4569#11481#0" expanded="true" />
+            <element signature="e#11480#11481#0" expanded="true" />
+            <element signature="method#dispClock#0;class#Board#0" expanded="false" />
+            <element signature="method#dispTempometer#0;class#Board#0" expanded="false" />
+            <element signature="method#setCurrentNextEvents#0;class#Board#0" expanded="false" />
+            <element signature="method#nextEarliestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#lastLatestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#updateTimeline#0;class#Board#0" expanded="false" />
+            <element signature="method#resetCollision#0;class#Board#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -831,68 +934,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/javafx.graphics/javafx/geometry/Point3D.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Trajectory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="61" column="9" lean-forward="false" selection-start-line="61" selection-start-column="9" selection-end-line="61" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Asteroid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="16" column="35" lean-forward="false" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/javafx.graphics/javafx/animation/AnimationTimer.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Testing.java">
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/javafx.graphics/javafx/scene/image/Image.java" />
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/javafx.graphics/javafx/geometry/Point3D.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1955">
-          <caret line="115" column="7" lean-forward="false" selection-start-line="115" selection-start-column="7" selection-end-line="115" selection-end-column="7" />
+        <state relative-caret-position="300">
+          <caret line="418" column="0" lean-forward="false" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/AstEvent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+        <state relative-caret-position="340">
+          <caret line="20" column="49" lean-forward="false" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1524#1525#0" expanded="true" />
+            <element signature="e#1547#1548#0" expanded="true" />
+            <element signature="e#1624#1625#0" expanded="true" />
+            <element signature="e#1687#1688#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Testing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="524">
+          <caret line="115" column="7" lean-forward="false" selection-start-line="115" selection-start-column="7" selection-end-line="115" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="55" column="30" lean-forward="false" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Entity#0;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#1;class#Entity#0" expanded="false" />
+            <element signature="method#Entity#2;class#Entity#0" expanded="false" />
+            <element signature="e#2388#2389#0" expanded="true" />
+            <element signature="e#2407#2408#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Asteroid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="34" column="30" lean-forward="false" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.1/lib/src.zip!/javafx.graphics/javafx/scene/image/Image.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Board.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Trajectory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="478" column="50" lean-forward="false" selection-start-line="478" selection-start-column="50" selection-end-line="478" selection-end-column="50" />
+        <state relative-caret-position="56">
+          <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2304#2305#0" expanded="true" />
-            <element signature="e#2323#2324#0" expanded="true" />
-            <element signature="e#2975#2983#0" expanded="true" />
-            <element signature="e#4255#11105#0" expanded="true" />
-            <element signature="e#11104#11105#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/codingthroughthestuck/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="122" lean-forward="false" selection-start-line="5" selection-start-column="122" selection-end-line="5" selection-end-column="122" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2593#2594#0" expanded="true" />
+            <element signature="e#2612#2613#0" expanded="true" />
+            <element signature="e#3264#3272#0" expanded="true" />
+            <element signature="e#4569#11481#0" expanded="true" />
+            <element signature="e#11480#11481#0" expanded="true" />
+            <element signature="method#dispClock#0;class#Board#0" expanded="false" />
+            <element signature="method#dispTempometer#0;class#Board#0" expanded="false" />
+            <element signature="method#setCurrentNextEvents#0;class#Board#0" expanded="false" />
+            <element signature="method#nextEarliestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#lastLatestEvent#0;class#Board#0" expanded="false" />
+            <element signature="method#updateTimeline#0;class#Board#0" expanded="false" />
+            <element signature="method#resetCollision#0;class#Board#0" expanded="false" />
           </folding>
         </state>
       </provider>
