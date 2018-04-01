@@ -47,7 +47,7 @@ public class AstEvent implements Comparable<AstEvent>
 			}
 		}
 	}
-	public AstEvent(char y, int t, Point l, Point3D entityKey)
+	public AstEvent(char y, Point l, int t, Point3D entityKey)
 	{
 		this.entityKey = entityKey;
 		time = t;

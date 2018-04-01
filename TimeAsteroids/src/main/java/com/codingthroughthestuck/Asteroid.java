@@ -32,7 +32,7 @@ public class Asteroid extends Entity
 		this.size = size;
 		initialize();
 		super.setSprite(getImg());
-		super.setSpawn(new AstEvent('s',(int)trajectory.getT0(),new Point((int)trajectory.getX0(),(int)trajectory.getY0()),new Point3D(trajectory.getT0(),trajectory.getX0(),trajectory.getY0())));
+		super.setSpawn(new AstEvent('s',new Point((int)trajectory.getX0(),(int)trajectory.getY0()),(int)trajectory.getT0(),new Point3D(trajectory.getX0(),trajectory.getY0(),trajectory.getT0())));
 		super.setTrajectory(trajectory);
 	}
 	private void initialize()

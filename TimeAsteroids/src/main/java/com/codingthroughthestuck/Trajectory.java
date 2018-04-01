@@ -41,7 +41,7 @@ public class Trajectory
 	}
 	public Point getLocAt(int time, Canvas canvas) //returns the xy location at a given time in ms or -1,-1 if it doesn't exist - accounts for wraparound
 	{
-		if(time > spawn.getZ())
+		if((time > spawn.getZ() && tickSpeed >=0) || (time < spawn.getZ() && tickSpeed < 0))
 		{
 			int x = ((int)Math.floor(mX*(time-spawn.getZ())*tickSpeed) + (int)spawn.getX())%(int)canvas.getWidth();
 			int y = ((int)Math.floor(mY*(time-spawn.getZ())*tickSpeed) + (int)spawn.getY())%(int)canvas.getHeight();
@@ -49,7 +49,7 @@ public class Trajectory
 		}
 		else
 		{
-			System.out.println("entity does not exist @Trajectory@getLocAt");
+			System.out.println("entity does not yet exist @Trajectory@getLocAt");
 			return new Point(-1,-1);
 		}
 	}

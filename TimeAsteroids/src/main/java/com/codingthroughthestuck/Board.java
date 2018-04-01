@@ -25,6 +25,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.Point;
@@ -35,6 +36,7 @@ public class Board extends Application
 	private boolean firstTime = true;
 	private boolean playerDidThings = false;
 	private boolean nextEventFlag = false;
+	private boolean backQuoteFlag = false;
 	private int currentTime = 0; //worldtime in ms; 0 is start of game, - is past, + is future
 	private long startTime = 0; //in ns
 	private long lastClockTime = 0; //last time the loop updated itself in ns;
@@ -66,15 +68,14 @@ public class Board extends Application
 
 		stage.show();
 
-		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
-		{
-			canvas.setHeight(stage.getHeight());
-			canvas.setWidth(stage.getWidth());
-		};
-
-
-		stage.widthProperty().addListener(stageSizeListener);
-		stage.heightProperty().addListener(stageSizeListener);
+		//change canvas size with screen size; Currently more annoying than useful. New decision: list of resolutions/sizes for player, rather than dynamic resizing
+//		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
+//		{
+//			canvas.setHeight(stage.getHeight());
+//			canvas.setWidth(stage.getWidth());
+//		};
+//		stage.widthProperty().addListener(stageSizeListener);
+//		stage.heightProperty().addListener(stageSizeListener);
 
 		//setup key listening array
 		ArrayList<String> keys = new ArrayList<String>();
@@ -144,7 +145,7 @@ public class Board extends Application
 				//be annoyed the player did things, forcing us to recalculate everything
 				if(playerDidThings || firstTime)
 				{
-					updateTimeline();
+					//updateTimeline();
 					if(firstTime)
 					{
 						firstTime = false;
@@ -303,24 +304,46 @@ public class Board extends Application
 				{
 					//playerShip.setTickSpeed(playerShip.getTickSpeed()-0.1);
 					playerShip.setTickSpeed(-1);
+					if(keys.contains("SHIFT"))
+					{
+						playerShip.setTickSpeed(-0.5);
+					}
 				}
 				if(keys.contains("E")) //increase tickspeed
 				{
 					//playerShip.setTickSpeed(playerShip.getTickSpeed()+0.1);
 					playerShip.setTickSpeed(1);
+					if(keys.contains("SHIFT"))
+					{
+						playerShip.setTickSpeed(0.5);
+					}
 				}
 				if(keys.contains("W"))
 				{
 					playerShip.setTickSpeed(0);
+				}
+				if(keys.contains("BACK_QUOTE"))
+				{
+					backQuoteFlag = true;
+				}
+				if(!keys.contains("BACK_QUOTE") && backQuoteFlag) //THERE IS A BETTER WAY TO DETECT KEY PRESSES THAN THIS AND YOU SHOULD FEEL BAD THAT YOU'VE RESORTED TO THIS INSTEAD
+				{
+					// ` to display debug
+					backQuoteFlag = false;
+					dispDebugScreen();
 				}
 			}
 		}.start();
 	}
 	private void dispClock(GraphicsContext gc)
 	{
+		int cs = (int)Math.floor(currentTime)/10;
 		int sec = (int)Math.floor(currentTime)/1000;
 		int min = (int)Math.floor(sec/60);
 		int hour = (int)Math.floor(min/60);
+
+		String centiSeconds = cs+"";
+		centiSeconds = centiSeconds.substring(1);
 		String seconds = sec%60+"";
 		if(seconds.length()==1)
 			seconds = "0"+seconds;
@@ -329,6 +352,10 @@ public class Board extends Application
 		String hours = hour+"";
 		String minutes = min%60+"";
 
+		if(cs<0)
+		{
+			centiSeconds = centiSeconds.substring(1);
+		}
 		if(min<0)
 		{
 			minutes = minutes.substring(1);
@@ -348,8 +375,8 @@ public class Board extends Application
 			gc.setFill(Color.ORANGE);
 		else
 			gc.setFill(Color.RED);
-		gc.fillText("Time: "+hours+":"+minutes+":"+seconds, gc.getCanvas().getWidth()/2-75, 25);
-		gc.strokeText("Time: "+hours+":"+minutes+":"+seconds, gc.getCanvas().getWidth()/2-75, 25);
+		gc.fillText("Time: "+hours+":"+minutes+":"+seconds+"."+centiSeconds, gc.getCanvas().getWidth()/2-75, 25);
+		gc.strokeText("Time: "+hours+":"+minutes+":"+seconds+"."+centiSeconds, gc.getCanvas().getWidth()/2-75, 25);
 
 	}
 	private void dispTempometer(GraphicsContext gc)
@@ -400,6 +427,65 @@ public class Board extends Application
 					break;
 			}
 		}
+	}
+	private void dispDebugScreen()
+	{
+		Stage stage2 = new Stage();
+		stage2.setX(0);
+		//stage2.initModality(Modality.NONE); //A poor (read: failed) attempt to make it not autofocus to this window upon creation
+		stage2.setTitle("Debug");
+		Group root = new Group();
+		Scene scene = new Scene(root);
+		stage2.setScene(scene);
+		Canvas canvas = new Canvas(350,600);
+		root.getChildren().add(canvas);
+
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+
+		stage2.show();
+		new AnimationTimer()
+		{
+			@Override
+			public void handle(long currentNanoTime)
+			{
+				gc.setFill(Color.WHITE);
+				gc.fillRect(0,0,canvas.getHeight(),canvas.getWidth());
+				int h = (int)gc.getFont().getSize()+3; //text height
+				gc.setFill(Color.BLACK);
+				gc.fillText("Entities Size: "+entities.size(),0,0);
+				gc.fillText("Timeline Size: "+timeline.size(),0,h);
+
+				int i = 0;
+				for(AstEvent e : currentNextEvents)
+				{
+					switch(e.getType())
+					{
+						case 'C':
+						case 'c':
+							gc.setFill(Color.RED);
+							break;
+						case 'S':
+						case 's':
+							gc.setFill(Color.BLUE);
+							break;
+						default:
+							gc.setFill(Color.BLACK);
+					}
+					gc.fillText("Current Active Event Time: " + e.getTime(), 0, (2+2*i) * h);
+					gc.fillText("\" Entity Key: " + e.getEntityKey(), 0, (3+2*i) * h);
+					i++;
+				}
+				i *= 2;
+				gc.fillText("Active Entities Size: "+activeEntities.size(),0,(4+i)*h);
+				int[] iWrapper = {i};
+				activeEntities.forEach((k,v) ->
+				{
+					gc.fillText("Active Entity Key: " + k, 0, (5+iWrapper[0]) * h);
+					iWrapper[0] = iWrapper[0]+1;
+				});
+			}
+		}.start();
+
 	}
 	private void setCurrentNextEvents() //finds the next event in the timeline relative to tickspeed and current time
 	{
@@ -712,8 +798,8 @@ public class Board extends Application
 	private void resetCollision(Entity e, int newCollisionTime)
 	{
 		//calculate new collision time
-		double x = e.getTrajectory().getLocAt(newCollisionTime,canvas).getX();
-		double y = e.getTrajectory().getLocAt(newCollisionTime,canvas).getY();
+		//double x = e.getTrajectory().getLocAt(newCollisionTime,canvas).getX();
+		//double y = e.getTrajectory().getLocAt(newCollisionTime,canvas).getY();
 		//Point3D newCollide = new Point3D(x,y,newCollisionTime);
 
 		//update collision in entities
