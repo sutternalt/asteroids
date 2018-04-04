@@ -4,6 +4,7 @@ package com.codingthroughthestuck;
 //					"continuous" tickspeed changes breaks things - possibly due to tickacceleration during spawn/collide frames?
 //					collision "detection" says all collisions are at MAXINT
 //					Collisions cause nullpointerexceptions at line 169 - finding the activeEntity incorrectly or something
+//					entity does not yet exist: x0: 0.0, y0: 0.0, t0: 0.0 @Trajectory@getLocAt when travelling before 0s
 //Current goal: Collision Detection
 /*
 Options:
@@ -145,12 +146,12 @@ public class Board extends Application
 				//be annoyed the player did things, forcing us to recalculate everything
 				if(playerDidThings || firstTime)
 				{
-					//updateTimeline();
 					if(firstTime)
 					{
 						firstTime = false;
 						firstTimeSetup();
 					}
+					updateTimeline();
 				}
 				if(nextEventFlag)
 				{
@@ -343,12 +344,24 @@ public class Board extends Application
 		int hour = (int)Math.floor(min/60);
 
 		String centiSeconds = cs+"";
-		centiSeconds = centiSeconds.substring(1);
+		if(centiSeconds.length()>2)
+		{
+			if(cs>0)
+			{
+				centiSeconds = centiSeconds.substring(centiSeconds.length()-2);
+			}
+			else if(cs<0)
+			{
+				centiSeconds = centiSeconds.substring(centiSeconds.length()-3);
+			}
+		}
+
 		String seconds = sec%60+"";
 		if(seconds.length()==1)
 			seconds = "0"+seconds;
 		else if(sec<0 && seconds.length()==2)
 			seconds = "0"+seconds.substring(1);
+
 		String hours = hour+"";
 		String minutes = min%60+"";
 
@@ -476,6 +489,7 @@ public class Board extends Application
 					i++;
 				}
 				i *= 2;
+				gc.setFill(Color.BLACK);
 				gc.fillText("Active Entities Size: "+activeEntities.size(),0,(4+i)*h);
 				int[] iWrapper = {i};
 				activeEntities.forEach((k,v) ->
@@ -503,15 +517,17 @@ public class Board extends Application
 			currentNextEvents.add(timeline.getLast());
 		}
 	}
-	private LinkedList<AstEvent> nextEarliestEvent() //returns Least Upper Bound, chronologically, to current time from timeline. Returns the last event at t = MAXINT otherwise
+	private LinkedList<AstEvent> nextEarliestEvent() //returns Least Upper Bound, chronologically, to current time from timeline. Returns the last event(s) at t = MAXINT otherwise
 	{
 		ListIterator<AstEvent> lit = timeline.listIterator(0);
 		AstEvent e = lit.next();
 
+		//navigate to next earliest event
 		while(e.getTime() < currentTime && lit.hasNext() && !(e.getTime() > currentTime-(int)(deltaT/Math.pow(10,6))))
 		{
 			e = lit.next();
 		}
+		//check to see if any other events happen at this particular time; if so, add them to retVal
 		LinkedList<AstEvent> retVal = new LinkedList<>();
 		retVal.addLast(e);
 		int time = e.getTime();
@@ -526,25 +542,27 @@ public class Board extends Application
 
 		return retVal;
 	}
-	private LinkedList<AstEvent> lastLatestEvent() //returns Greatest Lower Bound, chronologically, to current time from timeline. Returns the first event at t = -MAXINT otherwise
+	private LinkedList<AstEvent> lastLatestEvent() //returns Greatest Lower Bound, chronologically, to current time from timeline. Returns the first event(s) at t = -MAXINT otherwise
 	{
 		ListIterator<AstEvent> lit = timeline.listIterator(timeline.size());
 		AstEvent e = lit.previous();
 
+		//navigate to next latest event
 		while(e.getTime() > currentTime && lit.hasPrevious() && !(e.getTime() < currentTime+(int)(deltaT/Math.pow(10,6))))
 		{
 			e = lit.previous();
 		}
+		//check to see if any other events happen at this particular time; if so, add them to retVal
 		LinkedList<AstEvent> retVal = new LinkedList<>();
 		retVal.addLast(e);
 		int time = e.getTime();
-		while(lit.hasNext() && time == e.getTime())
+		while(lit.hasPrevious() && time == e.getTime())
 		{
 			if(e!=retVal.getLast())
 			{
 				retVal.addLast(e);
 			}
-			e = lit.next();
+			e = lit.previous();
 		}
 
 		return retVal;
@@ -580,14 +598,19 @@ public class Board extends Application
 				collisionKeys.addFirst(k1);
 				collisionKeys.addLast(new Point3D(0,0,Integer.MIN_VALUE)); //second colliding entity defaults to junk, initialization entity
 
+				//actual math bit starts here
 				entities.forEach((k2,v2)->
 				{
+					//if we haven't compared this pair of entities and we're not comparing the same entity to itself - this is a power set of (entities x entities)
 					if(!alreadyChecked.contains(k2) && !v2.equals(v1))
 					{
+						//find the collision time between these two entities; if they don't collide, collision time will be maxint
 						int colTime = findCollisionTime(v1,v2);
 						int temp = earliestCollision.getFirst();
+
 						if((colTime < temp) && colTime != Integer.MAX_VALUE)
 						{
+							//if the found collision time is less than the running lowest time for these two objects, pass it and the colliding object's key out of this loop
 							earliestCollision.removeFirst();
 							earliestCollision.addFirst(colTime);
 							collisionKeys.removeLast();
@@ -596,26 +619,146 @@ public class Board extends Application
 					}
 				});
 
+				//grab the keys of the objects that collide earliest, as found from the previous loop
 				Point3D key1 = collisionKeys.removeFirst();
 				Point3D key2 = collisionKeys.removeLast();
-				Integer[] temp = {earliestCollision.remove(), (int)key1.getX(),(int)key1.getY(),(int)key1.getZ() , (int)key2.getX(),(int)key2.getY(),(int)key2.getZ()};
-				updatedCollisions.add(temp); //[time; x1, y1, t1; x2, y2, t2]
+				//create an int array containing the time of the collision, and the entity keys of collision_object 1 and collision_object 2, assuming a collision was found(ie colTime != maxint
+				if(earliestCollision.getFirst()!=Integer.MAX_VALUE)
+				{
+					Integer[] temp = {earliestCollision.remove(), (int)key1.getX(),(int)key1.getY(),(int)key1.getZ() , (int)key2.getX(),(int)key2.getY(),(int)key2.getZ()};
+					updatedCollisions.add(temp); //[time; x1, y1, t1; x2, y2, t2]
+				}
 			}
+			//ignore key 1 in future iterations, thus ensuring this is a power set (the set of all possible subsets) of entities x entities (euclidian product of entities)
 			alreadyChecked.add(k1);
 		});
 
-		//then delete the collision from entities and put the new one in
+
 		/*
 		for each thing in updatedCollisions
 			resetCollision(entities.get(x1,y1,t1),time)
 			resetCollision(entities.get(x2,y2,t2),time)
 		 */
+		//remove collisions whose entities have already collided ///////////////////THIS IS WHERE I LEFT OFF 4-3-18
+		/*
+			sort updatedCollisions by time aka updatedCollisions.get()[0]
+			in order, for each int[] i : updatedCollisions
+			{
+				if thing[i] contains an entity on the temporary linkedList //just wrote a method for doing this or nearly this
+					remove thing[i] from updatedCollisions
+				add entity thing[i1]'s entitykey to a temporary linkedlist
+				add entity thing[i2]'s entitykey to a temporary linkedlist
+			}
+		*/
+		LinkedList<Integer[]> collisions = new LinkedList<>();
+		sortUpdatedCollisionsByTime(updatedCollisions,0,updatedCollisions.size()-1);
+		//LinkedList<Integer[]> updatedCollisionsCopy = new LinkedList<>(updatedCollisions);
+		for(Integer[] i : updatedCollisions)
+		{
+			for(Integer[] j : collisions)
+			{
+				if(uCContainsEntityKey(i,j[0],j[1],j[2]))
+				{
+					updatedCollisions.remove(i);
+				}
+			}
+			collisions.add(new Integer[] {i[1],i[2],i[3]});
+			collisions.add(new Integer[] {i[4],i[5],i[6]});
+		}
+
+		//then delete the collision from entities and put the new one in
 		for(Integer[] i : updatedCollisions)
 		{
 			resetCollision(entities.get(new Point3D(i[1],i[2],i[3])), i[0]);
 			resetCollision(entities.get(new Point3D(i[4],i[5],i[6])), i[0]);
 		}
 		//also, do the same process for entities travelling backward in time and backward in time relative to the player tickspeed (might be taken care of in findCollisionTime. I pray !!!!!!!!!!
+
+		//finally, sanity-check the timeline. Each time should have an even number of collisions
+		/* //NOT CURRENTLY WORKING
+		HashMap<Integer, Integer> unPairedCollisions = new HashMap<>(); //key = time of event, value = timeline index
+		int tempTime;
+		int sameTimeCount = 1;
+		ListIterator<AstEvent> lit = timeline.listIterator();
+
+		//increase count while list iterator.next.time = lit.prev.get time
+		while(lit.hasNext())
+		{
+			AstEvent e = lit.next();
+			if (e.getType() == 'c')
+			{
+				tempTime = e.getTime();
+				//find duplicate collision events
+				while (lit.hasPrevious() && lit.hasNext() && lit.previous().getTime() == tempTime)
+				{
+					lit.next(); //return to original next index
+					sameTimeCount++;
+					lit.next(); //advance
+				}
+				if (sameTimeCount % 2 != 0) //if num of duplicates is odd, get rid of... the last one added? and replace with maxInt collision
+				{
+					resetCollision(entities.get(timeline.get(lit.nextIndex() - 1).getEntityKey()), Integer.MAX_VALUE);
+				}
+			}
+		}*/
+	}
+	 //quicksorts updated collisions by time; blatantly stolen from https://www.geeksforgeeks.org/quick-sort/ and loosely adapted for my purposes
+		/* This function takes last element as pivot,
+       places the pivot element at its correct
+       position in sorted array, and places all
+       smaller (smaller than pivot) to left of
+       pivot and all greater elements to right
+       of pivot */
+		private int partition(LinkedList<Integer[]> updatedCollisions, int low, int high)
+		{
+			int pivot = updatedCollisions.get(high)[0];
+			int i = (low-1); // index of smaller element
+			for (int j=low; j<high; j++)
+			{
+				// If current element is smaller than or
+				// equal to pivot
+				if (updatedCollisions.get(j)[0] <= pivot)
+				{
+					i++;
+
+					// swap arr[i] and arr[j]
+					int temp = updatedCollisions.get(i)[0];
+					updatedCollisions.get(i)[0] = updatedCollisions.get(j)[0];
+					updatedCollisions.get(j)[0] = temp;
+				}
+			}
+
+			// swap arr[i+1] and arr[high] (or pivot)
+			int temp = updatedCollisions.get(i+1)[0];
+			updatedCollisions.get(i+1)[0] = updatedCollisions.get(high)[0];
+			updatedCollisions.get(high)[0] = temp;
+
+			return i+1;
+		}
+		/* The main function that implements QuickSort()
+      arr[] --> Array to be sorted,
+      low  --> Starting index,
+      high  --> Ending index */
+		private void sortUpdatedCollisionsByTime(LinkedList<Integer[]> arr, int low, int high)
+		{
+			if (low < high)
+			{
+            /* pi is partitioning index, arr[pi] is
+              now at right place */
+				int pi = partition(arr, low, high);
+
+				// Recursively sort elements before
+				// partition and after partition
+				sortUpdatedCollisionsByTime(arr, low, pi-1);
+				sortUpdatedCollisionsByTime(arr, pi+1, high);
+			}
+		}
+	private boolean uCContainsEntityKey(Integer[] updatedCollisions, int x, int y, int t)
+	{
+		if((updatedCollisions[1] == x && updatedCollisions[2] == y && updatedCollisions[3] == t) || (updatedCollisions[4] == x && updatedCollisions[5] == y && updatedCollisions[6] == t))
+			return true;
+		else
+			return false;
 	}
 	private int findCollisionTime(Entity e1, Entity e2) //returns MAXINT if no collision between e1,e2
 	{
@@ -631,10 +774,10 @@ public class Board extends Application
 		if retVal < t.spawn1 || retVal < t.spawn2
 			retVal = MAXINT
 		*/
-		double dy1 = e1.getTrajectory().getmY();
 		double dx1 = e1.getTrajectory().getmX();
-		double dy2 = e2.getTrajectory().getmY();
+		double dy1 = e1.getTrajectory().getmY();
 		double dx2 = e2.getTrajectory().getmX();
+		double dy2 = e2.getTrajectory().getmY();
 		double x01 = e1.getSpawn().getLoc().getX();
 		double y01 = e1.getSpawn().getLoc().getY();
 		double x02 = e2.getSpawn().getLoc().getX();
@@ -679,13 +822,14 @@ public class Board extends Application
 			if((dx1 ==0 || dx2 ==0)&&(dy1 == 0 || dy2 == 0)) //vertical & horizontal
 			{
 				//FIGURE OUT HOW TO HANDLE THIS!!!!!!!!!!!!!!
+				return Integer.MAX_VALUE;
 			}
 			else if(dx1==0 || dx2 ==0) //one vertical
 			{
 				//initial intersection time + period of nonzero line
 				//aka shortxperiod
-				int j = 0;
-				while (tXInt0 < latestSpawn)
+				int j = 1;
+				while (tXInt0 < (latestSpawn + shortXPeriod))
 				{
 					tXInt0 = tXInt0 + j * shortXPeriod;
 					j++;
@@ -696,8 +840,9 @@ public class Board extends Application
 			else if(dy1 == 0 || dy2 ==0) //horizontal
 			{
 				//initial intersection time + period of nonzero
-				int j = 0;
-				while (tYInt0 < latestSpawn)
+				//return retVal such that retVal < (latest spawn + shorterPeriod) AND retVal contained in {intersection range}+n*shorterPeriod
+				int j = 1;
+				while (tYInt0 < (latestSpawn + shortYPeriod))
 				{
 					tYInt0 = tYInt0 + j * shortYPeriod;
 					j++;
@@ -795,6 +940,19 @@ public class Board extends Application
 		}
 		return retVal;
 	}
+	private int earliestSetIntersection(int x0, int x1, int y0, int y1) //returns earliest point if sets intersect and MAXINT if they don't
+	{
+		if(x1>y0)
+			return x1;
+		else if(y1 > x0)
+			return x0;
+		else if (x0 == y0 || y1 == x0)
+			return x0;
+		else if (x1 == y0)
+			return x1;
+		else //no intersection
+			return Integer.MAX_VALUE;
+	}
 	private void resetCollision(Entity e, int newCollisionTime)
 	{
 		//calculate new collision time
@@ -802,12 +960,18 @@ public class Board extends Application
 		//double y = e.getTrajectory().getLocAt(newCollisionTime,canvas).getY();
 		//Point3D newCollide = new Point3D(x,y,newCollisionTime);
 
-		//update collision in entities
-		entities.get(e.getSpawn().getXYT()).setCollide(newCollisionTime,canvas);
-
 		//remove old collision from timeline
 		timeline.remove(e.getCollide()); //remove the old collision
 
+		//update collision in entities
+		if(e.getSpawn().getType()=='S')
+		{
+			entities.get(e.getSpawn().getXYT()).setCollide('C',newCollisionTime, canvas);
+		}
+		else
+		{
+			entities.get(e.getSpawn().getXYT()).setCollide('c',newCollisionTime, canvas);
+		}
 		//add new collision to timeline
 		timeline.add(entities.get(e.getSpawn().getXYT()).getCollide());
 

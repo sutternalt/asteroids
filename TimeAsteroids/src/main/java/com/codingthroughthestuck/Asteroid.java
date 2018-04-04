@@ -33,6 +33,7 @@ public class Asteroid extends Entity
 		initialize();
 		super.setSprite(getImg());
 		super.setSpawn(new AstEvent('s',new Point((int)trajectory.getX0(),(int)trajectory.getY0()),(int)trajectory.getT0(),new Point3D(trajectory.getX0(),trajectory.getY0(),trajectory.getT0())));
+		super.getCollide().setEntityKey(super.getSpawn().getEntityKey());
 		super.setTrajectory(trajectory);
 	}
 	private void initialize()

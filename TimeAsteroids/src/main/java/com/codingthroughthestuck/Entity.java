@@ -41,6 +41,7 @@ public class Entity //be certain to set spawn after creating a new object!!!
 		this.trajectory = trajectory;
 		this.tickSpeed = trajectory.getTickSpeed();
 		this.spawn = new AstEvent('s',new Point((int)trajectory.getX0(),(int)trajectory.getY0()),(int)trajectory.getT0(),new Point3D(trajectory.getX0(),trajectory.getY0(),trajectory.getT0()));
+		this.collide.setEntityKey(spawn.getEntityKey());
 	}
 
 	public void setSpawn(AstEvent spawn)
@@ -51,9 +52,9 @@ public class Entity //be certain to set spawn after creating a new object!!!
 	{
 		this.collide = collide;
 	}
-	public void setCollide(int time,Canvas canvas)
+	public void setCollide(char type, int time,Canvas canvas)
 	{
-		collide = new AstEvent('c',trajectory.getLocAt(time, canvas),time,getSpawn().getXYT());
+		collide = new AstEvent(type,trajectory.getLocAt(time, canvas),time,getSpawn().getXYT());
 	}
 	public void setSprite(Image sprite)
 	{

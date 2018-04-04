@@ -49,7 +49,7 @@ public class Trajectory
 		}
 		else
 		{
-			System.out.println("entity does not yet exist @Trajectory@getLocAt");
+			System.out.println("entity does not yet exist: x0: "+spawn.getZ()+", y0: "+spawn.getY()+", t0: "+spawn.getZ() +" @Trajectory@getLocAt");
 			return new Point(-1,-1);
 		}
 	}

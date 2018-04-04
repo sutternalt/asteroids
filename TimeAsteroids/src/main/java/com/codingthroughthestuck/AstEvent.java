@@ -54,6 +54,13 @@ public class AstEvent implements Comparable<AstEvent>
 		location = l;
 		type = y;
 	}
+	public AstEvent(AstEvent e) //deep copy
+	{
+		time = e.getTime();
+		type = e.getType();
+		location = new Point((int)e.getLoc().getX(),(int)e.getLoc().getY());
+		entityKey = new Point3D(e.getEntityKey().getX(),e.getEntityKey().getY(),e.getEntityKey().getZ());
+	}
 
 	public char getType()
 	{
@@ -81,6 +88,10 @@ public class AstEvent implements Comparable<AstEvent>
 	{
 		type = c;
 	}
+	public void setEntityKey(Point3D entityKey)
+	{
+		this.entityKey = entityKey;
+	}
 
 	@Override
 	public int compareTo(AstEvent o) //natural order: time of event
@@ -93,9 +104,23 @@ public class AstEvent implements Comparable<AstEvent>
 		{
 			return -1;
 		}
-		else
+		else //times are equal
 		{
-			return 0;
+			if(this.type != o.getType())
+			{
+				switch(this.type)
+				{
+					case 'C':
+					case 'c':
+						return -1;
+					default:
+						return 1;
+				}
+			}
+			else
+			{
+				return 0;
+			}
 		}
 	}
 	@Override
